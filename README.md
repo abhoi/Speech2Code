@@ -1,7 +1,7 @@
 # speech2code
 An application that generators code based on speech.
 
-## [TODO](username)
+## \[TODO\](username)
 
 1. Test todo (abhoi)
 
