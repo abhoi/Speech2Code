@@ -1,7 +1,7 @@
 # speech2code
 An application that generators code based on speech.
 
-# Contributors
+## Contributors
 
 - [Amlaan Bhoi](https://abhoi.github.io/)
 - [Shubadra Govindan](https://www.linkedin.com/in/shubadra-govindan)
