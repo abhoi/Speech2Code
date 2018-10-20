@@ -1,5 +1,5 @@
 # speech2code
-An application that generators code based on speech.
+An application that generates code based on speech. Currently only supports English to Python.
 
 ## Contributors
 
