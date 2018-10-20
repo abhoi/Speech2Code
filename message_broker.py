@@ -32,7 +32,7 @@ class MessageBroker:
             if action_dic["action"] == "init":
                 MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'listening'}))
                 #INSERT AMLAANS FUNCTION CALL.
-                res = Text2CodeRequest._create_to_code_request("Create a function X with argument alpha, beta and gamma that returns Y", HEADERS, PARAMS)
+                res = Text2CodeRequest._create_to_code_request("create a main function", HEADERS, PARAMS)
                 action_data = Action.get_action(res)
                 print(action_data)
                 MessageBroker.send_message("py_to_ele", json.dumps(action_data))
