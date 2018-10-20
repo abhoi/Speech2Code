@@ -25,7 +25,6 @@ class MessageBroker:
     def receive_callback(ch, method, properties, body):
         try:
             print("Recieved a message.")
-            print("Recieved:", json.loads(body))
             #Need to initialise Python engine. 
             action_dic = json.loads(body)
             if action_dic["action"] == "init":
@@ -35,7 +34,7 @@ class MessageBroker:
                 res = stt._create_to_text_request()
                 ttc = Text2CodeRequest(res, HEADERS, PARAMS)
                 data = ttc._create_to_code_request()
-                print(data)
+                MessageBroker.send_message("py_to_ele", json.dumps(data))
         except Exception:
             print(traceback.format_exc())
             
