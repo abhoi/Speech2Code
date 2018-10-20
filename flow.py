@@ -35,35 +35,16 @@ PARAMS = {
     'staging': 'false',
 }
 
-class Text2CodeRequest:
-    def __init__(self, query, headers, params):
-        self.query = query
-        self.headers = headers
-        self.params = params
-
-    def _create_to_code_request(self):
-        """
-            Function to create a text to code request to Microsoft Luis
-            Args:
-                self: contains query, headers, and parameters
-            Returns:
-                json_response: [dict] a dictionary holding response from Luis including intent classifications
-        """
-        try:
-            self.params["q"] = self.query
-            r = requests.get(LUIS_ENDPOINT, headers=self.headers, params=self.params)
-            json_response = r.json()
-            print(r.status_code)
-            print(json_response)
-            return json_response
-        except Exception as e:
-            print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
 class Speech2TextRequest:
-    def __init__(self):
-        pass
-
-    def _create_to_text_request(self):
+    @staticmethod
+    def _create_to_text_request():
+        """
+            Function to record audio from microphone
+            Args:
+                None
+            Returns:
+                text: [string] speech to text response string
+        """
         r = sr.Recognizer()
         mic = sr.Microphone(device_index=0)
         print("Say something...")
@@ -71,10 +52,10 @@ class Speech2TextRequest:
             r.adjust_for_ambient_noise(source, duration=1.0)
             audio = r.listen(source)
         print("Audio recorded!")
-        self.audio = audio
-        return self._transcribe_file()
+        return Speech2TextRequest._transcribe_file(audio)
 
-    def _transcribe_file(self):
+    @staticmethod
+    def _transcribe_file(audio):
         """
             Function to call Google Speech-to-Text API to convert speech to text
             Args:
@@ -84,9 +65,9 @@ class Speech2TextRequest:
         """
         client = speech.SpeechClient()
 
-        self.audio = self.audio.get_wav_data()
+        audio = audio.get_wav_data()
 
-        audio = types.RecognitionAudio(content=self.audio)
+        audio = types.RecognitionAudio(content=audio)
         config = types.RecognitionConfig(
             encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
             sample_rate_hertz=44100,
@@ -97,11 +78,29 @@ class Speech2TextRequest:
             print(u'Transcript: {}'.format(result.alternatives[0].transcript))
             return result.alternatives[0].transcript
 
-class Text2SpeechRequest:
-    def __init__(self, query):
-        self.query = query
+class Text2CodeRequest:
+    @staticmethod
+    def _create_to_code_request(query, headers, params):
+        """
+            Function to create a text to code request to Microsoft Luis
+            Args:
+                self: contains query, headers, and parameters
+            Returns:
+                json_response: [dict] a dictionary holding response from Luis including intent classifications
+        """
+        try:
+            params["q"] = query
+            r = requests.get(LUIS_ENDPOINT, headers=headers, params=params)
+            json_response = r.json()
+            print(r.status_code)
+            print(json_response)
+            return json_response
+        except Exception as e:
+            print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-    def _create_to_speech_request(self):
+class Text2SpeechRequest:
+    @staticmethod
+    def _create_to_speech_request(query):
         """
             Function to create a text to speech request to Google Text-Speech-API
             Args:
@@ -110,7 +109,7 @@ class Text2SpeechRequest:
                 None
         """
         client = texttospeech.TextToSpeechClient()
-        synthesis_input = texttospeech.types.SynthesisInput(text=self.query)
+        synthesis_input = texttospeech.types.SynthesisInput(text=query)
         voice = texttospeech.types.VoiceSelectionParams(
             language_code='en-US', 
             ssml_gender=texttospeech.enums.SsmlVoiceGender.NEUTRAL
@@ -119,23 +118,15 @@ class Text2SpeechRequest:
         response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
         with open('output.mp3', 'wb') as out:
-        # Write the response to the output file.
             out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
 
-        # mixer.init()
-        # mixer.music.load(os.getcwd() + "/output.mp3")
-        # mixer.music.play()
-
 if __name__ == "__main__":
-    # Uncomment to test out
-    s = Speech2TextRequest()
-    r = s._create_to_text_request()
-    t = Text2CodeRequest(r, HEADERS, PARAMS)
-    t._create_to_code_request()
-    
-    if r is None:
-        r = "Something went wrong..."
+    r = Speech2TextRequest._create_to_text_request()
+    t = Text2CodeRequest._create_to_code_request(r, HEADERS, PARAMS)
 
-    t = Text2SpeechRequest(r)
-    t._create_to_speech_request() # Currently not working due to 403 error
+    # if r is None:
+    #     r = "Something went wrong..."
+
+    # t = Text2SpeechRequest(r)
+    # t._create_to_speech_request() # Currently not working due to 403 error
