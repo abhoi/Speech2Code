@@ -14,25 +14,10 @@ from google.cloud import texttospeech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 
-from CONST import CREDENTIAL_FILE_NAME, LUIS_ENDPOINT
+from CONST import CREDENTIAL_FILE_NAME, LUIS_ENDPOINT, HEADERS, PARAMS
 
 PATH = os.getcwd() + CREDENTIAL_FILE_NAME
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "%s" % PATH
-
-
-HEADERS = {
-    # Request headers
-    "Ocp-Apim-Subscription-Key": "6a6728b9981d417280f4dad97f82df96",
-    "content-type": "application/json",
-}
-
-PARAMS = {
-    # Don't forget to add query parameter "q": "query"
-    'timezoneOffset': '0',
-    'verbose': 'false',
-    'spellCheck': 'false',
-    'staging': 'false',
-}
 
 class Speech2TextRequest:
     @staticmethod
