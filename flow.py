@@ -14,6 +14,8 @@ from google.cloud import texttospeech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 
+from pygame import mixer
+
 CREDENTIAL_FILE_NAME = "/speech2code-0d3ecaa13ec2.json"
 PATH = os.getcwd() + CREDENTIAL_FILE_NAME
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "%s" % PATH
@@ -116,17 +118,25 @@ class Text2SpeechRequest:
         )
         audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3)
         response = client.synthesize_speech(synthesis_input, voice, audio_config)
+
         with open('output.mp3', 'wb') as out:
         # Write the response to the output file.
             out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
 
+        mixer.init()
+        mixer.music.load(os.getcwd() + "/output.mp3")
+        mixer.music.play()
+
 if __name__ == "__main__":
     # Uncomment to test out
-    # s = Speech2TextRequest()
-    # r = s._create_to_text_request()
-    # t = Text2CodeRequest(r, headers, params)
-    # t._create_to_code_request()
+    s = Speech2TextRequest()
+    r = s._create_to_text_request()
+    t = Text2CodeRequest(r, headers, params)
+    t._create_to_code_request()
     
-    t = Text2SpeechRequest("Hello, World!")
+    if r is None:
+        r = "Something went wrong..."
+
+    t = Text2SpeechRequest(r)
     t._create_to_speech_request() # Currently not working due to 403 error
