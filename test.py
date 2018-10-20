@@ -1,4 +1,5 @@
-from message_broker import MessageBroker
+from flow import Text2CodeRequest, HEADERS, PARAMS
 import json
 
-MessageBroker.send_message("ele_to_py", json.dumps({"Name":"Sandeep"}))
+res = Text2CodeRequest._create_to_code_request("Create a function X with argument alpha, beta and gamma that returns Y", HEADERS, PARAMS)
+print(json.dumps(res))
