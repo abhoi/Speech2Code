@@ -6,6 +6,7 @@ import sys
 import traceback
 import pika
 import json
+from flow import Speech2TextRequest, Text2CodeRequest, HEADERS, PARAMS
 
 class MessageBroker:
     @staticmethod
@@ -23,14 +24,21 @@ class MessageBroker:
     @staticmethod
     def receive_callback(ch, method, properties, body):
         try:
+            print("Recieved a message.")
             print("Recieved:", json.loads(body))
             #Need to initialise Python engine. 
-
+            action_dic = json.loads(body)
+            if action_dic["action"] == "init":
+                MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'listening'}))
+                #INSERT AMLAANS FUNCTION CALL.
+                res = Speech2TextRequest._create_to_text_request()
+                data = Text2CodeRequest._create_to_code_request(res, HEADERS, PARAMS)
+                print(data)
         except Exception:
             print(traceback.format_exc())
             
     @staticmethod
-    def recieve_message(queue_ID):
+    def receive_message(queue_ID):
         try:
             connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
             channel = connection.channel()
@@ -41,11 +49,11 @@ class MessageBroker:
             print(traceback.format_exc())
 
 
-# if __name__ == '__main__':
-#     try:
-#         # print("Hey")
-#         message = {"first_name": "Debojit", "last_name": "Kaushik", "Age": 27}
-#         MessageBroker.send_message("py_to_js", json_data = json.dumps(message))
-#         MessageBroker.recieve_message("py_to_js")
-#     except Exception:
-#         print(traceback.format_exc())
+if __name__ == '__main__':
+    try:
+        # print("Hey")
+        # message = {"first_name": "Debojit", "last_name": "Kaushik", "Age": 27}
+        # MessageBroker.send_message("py_to_js", json_data = json.dumps(message))
+        MessageBroker.receive_message("ele_to_py")
+    except Exception:
+        print(traceback.format_exc())

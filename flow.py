@@ -21,13 +21,13 @@ PATH = os.getcwd() + CREDENTIAL_FILE_NAME
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "%s" % PATH
 LUIS_ENDPOINT = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/7cd5279c-2cdc-4234-b5dc-f2a4bfa809f2"
 
-headers = {
+HEADERS = {
     # Request headers
     "Ocp-Apim-Subscription-Key": "6a6728b9981d417280f4dad97f82df96",
     "content-type": "application/json",
 }
 
-params = {
+PARAMS = {
     # Don't forget to add query parameter "q": "query"
     'timezoneOffset': '0',
     'verbose': 'false',
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     # Uncomment to test out
     s = Speech2TextRequest()
     r = s._create_to_text_request()
-    t = Text2CodeRequest(r, headers, params)
+    t = Text2CodeRequest(r, HEADERS, PARAMS)
     t._create_to_code_request()
     
     if r is None:
