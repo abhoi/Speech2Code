@@ -14,7 +14,7 @@ from google.cloud import texttospeech
 from google.cloud.speech import enums
 from google.cloud.speech import types
 
-from pygame import mixer
+# from pygame import mixer
 
 CREDENTIAL_FILE_NAME = "/speech2code-0d3ecaa13ec2.json"
 PATH = os.getcwd() + CREDENTIAL_FILE_NAME
@@ -51,7 +51,6 @@ class Text2CodeRequest:
         """
         try:
             self.params["q"] = self.query
-            print(params["q"])
             r = requests.get(LUIS_ENDPOINT, headers=self.headers, params=self.params)
             json_response = r.json()
             print(r.status_code)
@@ -124,9 +123,9 @@ class Text2SpeechRequest:
             out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
 
-        mixer.init()
-        mixer.music.load(os.getcwd() + "/output.mp3")
-        mixer.music.play()
+        # mixer.init()
+        # mixer.music.load(os.getcwd() + "/output.mp3")
+        # mixer.music.play()
 
 if __name__ == "__main__":
     # Uncomment to test out

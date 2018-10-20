@@ -31,8 +31,10 @@ class MessageBroker:
             if action_dic["action"] == "init":
                 MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'listening'}))
                 #INSERT AMLAANS FUNCTION CALL.
-                res = Speech2TextRequest._create_to_text_request()
-                data = Text2CodeRequest._create_to_code_request(res, HEADERS, PARAMS)
+                stt = Speech2TextRequest()
+                res = stt._create_to_text_request()
+                ttc = Text2CodeRequest(res, HEADERS, PARAMS)
+                data = ttc._create_to_code_request()
                 print(data)
         except Exception:
             print(traceback.format_exc())
@@ -44,6 +46,7 @@ class MessageBroker:
             channel = connection.channel()
             channel.queue_declare(queue_ID)
             channel.basic_consume(MessageBroker.receive_callback, queue = queue_ID, no_ack = True)
+            print("Starting to listen...")
             channel.start_consuming()
         except Exception:
             print(traceback.format_exc())
