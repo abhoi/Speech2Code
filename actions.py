@@ -72,10 +72,7 @@ class Action:
                         "status": "Variable added.",
                         "action": "add_variable",
                         "data": {
-                            "args": {
-                                "entity": intent_data["entities"]["entity"],
-                                "type": intent_data["entities"]["type"]
-                            }
+                            "args": [{"entity": item['entity'], "type": item['type']} for item in intent_data['entities']]
                         }
                     }
                 else:
