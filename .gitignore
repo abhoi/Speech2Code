@@ -113,3 +113,4 @@ venv.bak/
 dmypy.json
 
 .DS_STORE
+*.mp3
