@@ -1,7 +1,7 @@
 """
     @author: Amlaan Bhoi, Debojit Kaushik
     @date: October 19 2018
-    Module to encapsulate speech to text and text to speech requests from Google Speech Recognition API and Microsoft Luis API.
+    Module to encapsulate speech to text, text to code, and text to speech requests from Google Speech-to-Text API, Google Text-to-Speech API, and Microsoft Luis API.
 """
 
 import os
@@ -105,6 +105,7 @@ class Text2SpeechRequest:
             out.write(response.audio_content)
         print('Audio content written to file "output.mp3"')
 
+# Tests
 if __name__ == "__main__":
     r = Speech2TextRequest._create_to_text_request()
     t = Text2CodeRequest._create_to_code_request(r, HEADERS, PARAMS)
@@ -113,4 +114,4 @@ if __name__ == "__main__":
     #     r = "Something went wrong..."
 
     # t = Text2SpeechRequest(r)
-    # t._create_to_speech_request() # Currently not working due to 403 error
+    # t._create_to_speech_request() # Working now! Just saves .mp3 file.
