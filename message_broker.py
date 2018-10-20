@@ -24,6 +24,8 @@ class MessageBroker:
     def receive_callback(ch, method, properties, body):
         try:
             print("Recieved:", json.loads(body))
+            #Need to initialise Python engine. 
+
         except Exception:
             print(traceback.format_exc())
             
