@@ -135,7 +135,7 @@ class Action:
                 elif intent == "save_file":
                     action_dic = {
                         "status": "Saved script.",
-                        "action": "run_file",
+                        "action": "save_file",
                         "data": {
                             "args": []
                         }

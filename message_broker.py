@@ -35,7 +35,11 @@ class MessageBroker:
                 res = Text2CodeRequest._create_to_code_request("aodjfnoaisdoisdoivs", HEADERS, PARAMS)
                 action_data = Action.get_action(res)
                 print("sending message..", action_data)
-                MessageBroker.send_message("py_to_ele", json.dumps(action_data))
+                if action_data != None:
+                    MessageBroker.send_message("py_to_ele", json.dumps(action_data))
+                    MessageBroker.send_message("py_to_ext", json.dumps(action_data))
+                else:
+                    MessageBroker.send_message("py_to_ele", json.dumps({"status":"invalid_query"}))
             elif action_dic["action"] == "init_freeflow":
                 MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'Listening'}))
                 res = Speech2TextRequest()._create_to_text_request()
@@ -70,7 +74,8 @@ class MessageBroker:
                     }
                 
                 print("sending message...", action_data)
-                MessageBroker.send_message("py_to_ext", json.dumps(action_data))
+                if action_data != None:
+                    MessageBroker.send_message("py_to_ext", json.dumps(action_data))
         except Exception:
             print(traceback.format_exc())
             
