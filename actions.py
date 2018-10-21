@@ -17,9 +17,15 @@ class Action:
                 "add_while",
                 "goto",
                 "call_function",
-                "add_variables" 
+                "add_variables",
+                "add_class",
+                "add_try_catch",
+                "save_file",
+                "run_file",
+                "add_newline"
             ]
             intent = intent_data["topScoringIntent"]["intent"]
+            print(intent)
             if intent in intents:
                 if intent == "add_function":
                     action_dic = {
@@ -102,14 +108,6 @@ class Action:
                             "args": []
                         }
                     }
-                elif intent == "add_newline":
-                    action_dic = {
-                        "status": "NewLine inserted.",
-                        "action": "add_newline",
-                        "data": {
-                            "args": []
-                        }
-                    }
                 elif intent == "add_try_catch":
                     action_dic = {
                         "status": "Exception Handling block added.",
@@ -129,14 +127,6 @@ class Action:
                 elif intent == "run_file":
                     action_dic = {
                         "status": "Running script",
-                        "action": "run_file",
-                        "data": {
-                            "args": []
-                        }
-                    }
-                elif intent == "run_file":
-                    action_dic = {
-                        "status": "Running script..",
                         "action": "run_file",
                         "data": {
                             "args": []
@@ -162,6 +152,12 @@ class Action:
                     action_dic = {
                         "status": "Invalid query"
                     }
-            return action_dic
+                print(action_dic)
+                return action_dic
+            else:
+                action_dic = {
+                        "status": "Invalid query"
+                    }
+                return action_dic
         except Exception:
             print(traceback.format_exc())
