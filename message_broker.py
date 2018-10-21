@@ -42,45 +42,47 @@ class MessageBroker:
                     MessageBroker.send_message("py_to_ele", json.dumps({"status":"Invalid query"}))
             elif action_dic["action"] == "init_freeflow":
                 MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'Listening'}))
-                res = None
-                try:
-                    res = Speech2TextRequest._create_to_text_request()
-                    print(res)
-                except:
-                    print("Res error")
-                if "return" in res:
-                    action_data = {
-                        "status": "Free flow",
-                        "action": "return",
-                        "data": {
-                            "args": res.split("return ")[1:]
-                        }
-                    }
-                elif "print" in res:
-                    action_data = {
-                        "status": "Free flow",
-                        "action": "print",
-                        "data": {
-                            "args": res.split("print ")[1:]
-                        }
-                    }
-                else:
-                    ops = {"plus": "+", "minus": "-", "multiply": "*", "divide": "/", "less than": "<", "less than or equal to": "<=", "greater than": ">", "greater than or equal to": ">="}
-                    for i in ops.keys():
-                        res = res.replace(i, ops[i])
 
-                    action_data = {
+                res = Speech2TextRequest._create_to_text_request()
+                print(res)
+
+                if res != None:
+
+                    if "return" in res:
+                        action_data = {
                             "status": "Free flow",
-                            "action": "arithmetic",
+                            "action": "return",
                             "data": {
-                                "args": res
+                                "args": res.split("return ")[1:]
                             }
-                    }
-                
-                print("sending message...", action_data)
-                if action_data != None:
-                    MessageBroker.send_message("py_to_ele", json.dumps(action_data))
-                    MessageBroker.send_message("py_to_ext", json.dumps(action_data))
+                        }
+                    elif "print" in res:
+                        action_data = {
+                            "status": "Free flow",
+                            "action": "print",
+                            "data": {
+                                "args": res.split("print ")[1:]
+                            }
+                        }
+                    else:
+                        ops = {"plus": "+", "minus": "-", "multiply": "*", "divide": "/", "less than": "<", "less than or equal to": "<=", "greater than": ">", "greater than or equal to": ">=","< or equal to":"<=","> or equal to":">="}
+                        for i in ops.keys():
+                            res = res.replace(i, ops[i])
+
+                        action_data = {
+                                "status": "Free flow",
+                                "action": "arithmetic",
+                                "data": {
+                                    "args": res
+                                }
+                        }
+                    
+                    print("sending message...", action_data)
+                    if action_data != None:
+                        MessageBroker.send_message("py_to_ele", json.dumps(action_data))
+                        MessageBroker.send_message("py_to_ext", json.dumps(action_data))
+                else:
+                    MessageBroker.send_message("py_to_ele", json.dumps({"status": "Invalid query"}))
         except Exception:
             print(traceback.format_exc())
             
