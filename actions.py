@@ -22,7 +22,8 @@ class Action:
                 "add_try_catch",
                 "save_file",
                 "run_file",
-                "add_newline"
+                "add_newline",
+                "add_breakpoint"
             ]
             intent = intent_data["topScoringIntent"]["intent"]
             print(intent)
