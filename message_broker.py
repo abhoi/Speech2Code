@@ -75,6 +75,7 @@ class MessageBroker:
                 
                 print("sending message...", action_data)
                 if action_data != None:
+                    MessageBroker.send_message("py_to_ele", json.dumps(action_data))
                     MessageBroker.send_message("py_to_ext", json.dumps(action_data))
         except Exception:
             print(traceback.format_exc())
