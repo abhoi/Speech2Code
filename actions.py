@@ -38,7 +38,7 @@ class Action:
                     }
                 elif intent == "add_if_else":
                     action_dic = {
-                        "status": "Function Creation Returned",
+                        "status": "If-else Block Created",
                         "action": "add_if_else",
                         "data": {
                             "args": []
@@ -46,7 +46,7 @@ class Action:
                     }
                 elif intent == "add_main":
                     action_dic = {
-                        "status": "Function Creation Returned",
+                        "status": "Main Function Created",
                         "action": "add_main",
                         "data": {}
                     }

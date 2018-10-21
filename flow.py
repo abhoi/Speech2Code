@@ -84,7 +84,7 @@ class Text2CodeRequest:
 
 class Text2SpeechRequest:
     @staticmethod
-    def _create_to_speech_request(query):
+    def _create_to_speech_request(query, filename):
         """
             Function to create a text to speech request to Google Text-Speech-API
             Args:
@@ -96,22 +96,23 @@ class Text2SpeechRequest:
         synthesis_input = texttospeech.types.SynthesisInput(text=query)
         voice = texttospeech.types.VoiceSelectionParams(
             language_code='en-US', 
-            ssml_gender=texttospeech.enums.SsmlVoiceGender.NEUTRAL
+            ssml_gender=texttospeech.enums.SsmlVoiceGender.FEMALE
         )
         audio_config = texttospeech.types.AudioConfig(audio_encoding=texttospeech.enums.AudioEncoding.MP3)
         response = client.synthesize_speech(synthesis_input, voice, audio_config)
 
-        with open('output.mp3', 'wb') as out:
+        path = "/Users/amlaanbhoi/Desktop/s2c_mp3/"
+        with open(path + file_name + '.mp3', 'wb') as out:
             out.write(response.audio_content)
-        print('Audio content written to file "output.mp3"')
 
 # Tests
 if __name__ == "__main__":
-    r = Speech2TextRequest._create_to_text_request()
-    t = Text2CodeRequest._create_to_code_request(r, HEADERS, PARAMS)
+    # r = Speech2TextRequest._create_to_text_request()
+    # t = Text2CodeRequest._create_to_code_request(r, HEADERS, PARAMS)
 
     # if r is None:
     #     r = "Something went wrong..."
 
-    # t = Text2SpeechRequest(r)
-    # t._create_to_speech_request() # Working now! Just saves .mp3 file.
+    r = "Undoing changes!"
+    file_name = "undo_changes"
+    t = Text2SpeechRequest()._create_to_speech_request(r, file_name)
