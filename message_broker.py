@@ -31,8 +31,9 @@ class MessageBroker:
             action_dic = json.loads(body)
             if action_dic["action"] == "init":
                 MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'Listening'}))
-                #INSERT AMLAANS FUNCTION CALL.
-                res = Text2CodeRequest._create_to_code_request("Go to line five", HEADERS, PARAMS)
+                
+                res = Speech2TextRequest._create_to_text_request()
+                res = Text2CodeRequest._create_to_code_request(res, HEADERS, PARAMS)
                 action_data = Action.get_action(res)
                 print("sending message..", action_data)
                 if action_data != None:
