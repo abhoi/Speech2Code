@@ -64,7 +64,7 @@ class Action:
                         "status": "Go to line/function called.",
                         "action": "goto",
                         "data": {
-                            "args": intent_data["entities"][0]["entity"],
+                            "args": intent_data["entities"][0]["resolution"]["value"],
                             "type": intent_data["entities"][0]["type"]                         
                         }
                     }
@@ -106,7 +106,8 @@ class Action:
                         "status": "NewLine inserted.",
                         "action": "add_newline",
                         "data": {
-                            "args": []
+                            "args": intent_data["entities"][0]["resolution"]["value"],
+                            "type": intent_data["entities"][0]["type"]
                         }
                     }
                 elif intent == "add_try_catch":
