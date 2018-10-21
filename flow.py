@@ -113,6 +113,6 @@ if __name__ == "__main__":
     # if r is None:
     #     r = "Something went wrong..."
 
-    r = "Undoing changes!"
+    r = "U!"
     file_name = "undo_changes"
     t = Text2SpeechRequest()._create_to_speech_request(r, file_name)
