@@ -34,7 +34,7 @@ class MessageBroker:
                 #INSERT AMLAANS FUNCTION CALL.
                 res = Text2CodeRequest._create_to_code_request("create a variable called X Y and Z", HEADERS, PARAMS)
                 action_data = Action.get_action(res)
-                print(action_data)
+                print("sending message..")
                 MessageBroker.send_message("py_to_ele", json.dumps(action_data))
         except Exception:
             print(traceback.format_exc())

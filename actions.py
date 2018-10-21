@@ -34,7 +34,9 @@ class Action:
                     action_dic = {
                         "status": "Function Creation Returned",
                         "action": "add_if_else",
-                        "data": {}
+                        "data": {
+                            "args": []
+                        }
                     }
                 elif intent == "add_main":
                     action_dic = {
@@ -75,16 +77,91 @@ class Action:
                             "args": [{"entity": item['entity'], "type": item['type']} for item in intent_data['entities']]
                         }
                     }
+                    #Here
+                elif intent == "add_breakpoint":
+                    action_dic = {
+                        "status": "Breakpoint added.",
+                        "action": "add_breakpoint",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "add_class":
+                    action_dic = {
+                        "status": "class added/created.",
+                        "action": "add_class",
+                        "data": {
+                            "args": [{"entity": item['entity'], "type": item['type']} for item in intent_data['entities']]
+                        }
+                    }
+                elif intent == "add_newline":
+                    action_dic = {
+                        "status": "NewLine inserted.",
+                        "action": "add_newline",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "add_newline":
+                    action_dic = {
+                        "status": "NewLine inserted.",
+                        "action": "add_newline",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "add_try_catch":
+                    action_dic = {
+                        "status": "Exception Handling block added.",
+                        "action": "add_try_catch",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "delete_line":
+                    action_dic = {
+                        "status": "Line Removed",
+                        "action": "delete_line",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "run_file":
+                    action_dic = {
+                        "status": "Running script",
+                        "action": "run_file",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "run_file":
+                    action_dic = {
+                        "status": "Running script..",
+                        "action": "run_file",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "save_file":
+                    action_dic = {
+                        "status": "Saved script.",
+                        "action": "run_file",
+                        "data": {
+                            "args": []
+                        }
+                    }
+                elif intent == "undo_changes":
+                    action_dic = {
+                        "status": "Changes reverted back (Undo).",
+                        "action": "undo_changes",
+                        "data": {
+                            "args": []
+                        }
+                    }
                 else:
-                    print(intent)
+                    action_dic = {
+                        "status": "Invalid query"
+                    }
             return action_dic
         except Exception:
             print(traceback.format_exc())
-
-
-
-if __name__ == '__main__':
-    try:
-        pass #Write here.
-    except Exception:
-        print(traceback.format_exc())
