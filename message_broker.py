@@ -42,8 +42,12 @@ class MessageBroker:
                     MessageBroker.send_message("py_to_ele", json.dumps({"status":"Invalid query"}))
             elif action_dic["action"] == "init_freeflow":
                 MessageBroker.send_message("py_to_ele", json_data = json.dumps({'status': 'Listening'}))
-                res = Speech2TextRequest()._create_to_text_request()
-
+                res = None
+                try:
+                    res = Speech2TextRequest._create_to_text_request()
+                    print(res)
+                except:
+                    print("Res error")
                 if "return" in res:
                     action_data = {
                         "status": "Free flow",
