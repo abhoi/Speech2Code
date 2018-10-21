@@ -47,7 +47,7 @@ class MessageBroker:
                 if "return" in res:
                     action_data = {
                         "status": "Free flow",
-                        "action": "arithmetic",
+                        "action": "return",
                         "data": {
                             "args": res.split("return ")[1:]
                         }
@@ -67,7 +67,7 @@ class MessageBroker:
 
                     action_data = {
                             "status": "Free flow",
-                            "action": "return",
+                            "action": "arithmetic",
                             "data": {
                                 "args": res
                             }
