@@ -1,5 +1,5 @@
 # Iris
-
+![](https://dkaushik94.github.io/assets/IRIS.jpeg)
 Iris is an application that helps users generate code without typing anything. Any user can just speak into the application and the application will generate code related to that. The best thing is, you can talk in free-form (natural language) and we parse everything to generate the code! Currently we support only English to Python.
 
 ### Approach
