@@ -43,7 +43,7 @@ class Speech2TextRequest:
         """
             Function to call Google Speech-to-Text API to convert speech to text
             Args:
-                self: contains audio file
+                audio: [PyAudio] audio file to transcribe
             Returns:
                 transcript: [string] result from speech to text
         """
@@ -68,7 +68,9 @@ class Text2CodeRequest:
         """
             Function to create a text to code request to Microsoft Luis
             Args:
-                self: contains query, headers, and parameters
+                query: [string] text containing query
+                headers: [dict] necessary headers for API request
+                parameters: [dict] parameters for customizing API request
             Returns:
                 json_response: [dict] a dictionary holding response from Luis including intent classifications
         """
@@ -88,7 +90,8 @@ class Text2SpeechRequest:
         """
             Function to create a text to speech request to Google Text-Speech-API
             Args:
-                self: contains query in question
+                query: [string] text containing query to convert to speech
+                filename: [string] filename to store the audio file
             Returns:
                 None
         """
